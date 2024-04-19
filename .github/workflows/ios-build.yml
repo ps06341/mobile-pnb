@@ -1,0 +1,29 @@
+name: iOS Build
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build iOS App
+        run: |
+          cd ios
+          pod install
+          cd ..
+          npx react-native run-ios --configuration=Release
