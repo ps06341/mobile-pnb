@@ -19,11 +19,13 @@ jobs:
           node-version: '20.12.2'
 
       - name: Install Dependencies
-        run: yarn install
+        run: npm install
 
       - name: Build iOS App
         run: |
-          cd ios
-          pod install
-          cd ..
-          npx react-native run-ios --configuration=Release
+          expo run:ios
+
+      - name: Upload iOS App
+        uses: actions/upload-artifact@v2
+        with:
+          path: ios/build/Build/Products/Release-iphoneos/mobile-pnb.ipa
